@@ -9,15 +9,15 @@ if __name__ == '__main__':
         lst = list(map(int, input().split()))
         country.append(lst)
 
-    country.sort(key=lambda x : (x[1], x[2], x[3]))
+    country.sort(key=lambda x : (x[1], x[2], x[3]), reverse=True)
     place[0].append(country[0][0])
-    p = 0
+    p = 1
     for i in range(1, n):
         if country[i][1:] == country[i-1][1:]:
-            place[p].append(country[i][0])
+            place[p-1].append(country[i][0])
         else:
-            p += 1
             place[p].append(country[i][0])
+        p += 1
 
     for i in range(n):
         if k in place[i]:
