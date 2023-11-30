@@ -1,35 +1,13 @@
 
+N, K = map(int, input().split())
 
-if __name__ == '__main__':
+medals = [list(map(int, input().split())) for _ in range(N)]
+    
+medals.sort(key = lambda x : (x[1], x[2], x[3]), reverse=True)
 
-    n, k = map(int, input().split())
-    country = []
-    place = [[] for _ in range(n)]
-    for _ in range(n):
-        lst = list(map(int, input().split()))
-        country.append(lst)
+idx = [medals[i][0] for i in range(N)].index(K)
 
-    country.sort(key=lambda x : (x[1], x[2], x[3]), reverse=True)
-    place[0].append(country[0][0])
-    p = 1
-    for i in range(1, n):
-        if country[i][1:] == country[i-1][1:]:
-            place[p-1].append(country[i][0])
-        else:
-            place[p].append(country[i][0])
-        p += 1
-
-    for i in range(n):
-        if k in place[i]:
-            print(i+1)
-            break
-
-
-
-
-
-
-
-
-
-
+for i in range(N):
+    if medals[idx][1:] == medals[i][1:]:
+        print(i+1)
+        break
