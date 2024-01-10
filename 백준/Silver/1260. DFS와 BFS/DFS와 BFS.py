@@ -1,40 +1,38 @@
-from collections import deque
+import collections as c
+import sys
+input = sys.stdin.readline
 
-n, m, v = map(int, input().split())
+n, m, v = map(int, input().rstrip().split())
+dic = c.defaultdict(list)
+for _ in range(m):
+    node1, node2 = map(int, input().rstrip().split())
+    dic[node1].append(node2)
+    dic[node2].append(node1)
 
-graph = [[] for _ in range(n + 1)]
-visited = [0]*(n+1)
+for key, val in dic.items():
+    dic[key] = sorted(val)
 
-for i in range(m):
-    s, e = map(int, input().split())
-    graph[s].append(e)
-    graph[e].append(s)
+visited_dfs = set()
+visited_bfs = set()
 
-for i in range(1, n+1):
-    graph[i].sort()
+def dfs(i):
+    print(i, end=' ')
+    visited_dfs.add(i)
+    for j in dic[i]:
+        if j not in visited_dfs:
+            dfs(j)
 
-def dfs(graph, v, visited):
-    visited[v] = 1
-    print(v, end = ' ')
-    for i in graph[v]:
-        if not visited[i]:
-            dfs(graph, i, visited)
+def bfs(i):
+    q = c.deque([i])
+    visited_bfs.add(i)
+    while len(q):
+        node = q.popleft()
+        print(node, end=' ')
+        for j in dic[node]:
+            if j not in visited_bfs:
+                visited_bfs.add(j)
+                q.append(j)
 
-def bfs(graph, start, visited):
-    queue = deque([start])
-
-    visited[start] = 1
-
-    while queue:
-        v = queue.popleft()
-        print(v, end = ' ')
-        for i in graph[v]:
-            if not visited[i]:
-                queue.append(i)
-                visited[i] = 1
-
-
-dfs(graph, v, visited)
-visited = [0]*(n+1)
+dfs(v)
 print()
-bfs(graph, v, visited)
+bfs(v)
