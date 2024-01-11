@@ -1,41 +1,26 @@
-from collections import deque
+import sys
+import collections as c
+input = sys.stdin.readline
 
-n = int(input())
-rel = [0 for _ in range(n+1)]
-graph = [[] for _ in range(n+1)]
-q = deque()
-visited = [0] * (n+1)
+n = int(input().rstrip())
+tree = c.defaultdict(list)
+parent = [0 for _ in range(n)]
+visited = set()
 
-for i in range(n-1):
-    a, b = map(int, input().split())
+for _ in range(n-1):
+    n1, n2 = map(int, input().rstrip().split())
+    tree[n1].append(n2)
+    tree[n2].append(n1)
 
-    graph[a].append(b)
-    graph[b].append(a)
-
-
-
-    if a == 1:
-        q.append(b)
-        rel[b] = 1
-        visited[b] = 1
-        
-    elif b == 1:
-        q.append(a)
-        rel[a] = 1
-        visited[a] = 1
-
-
-
-
-while len(q) != 0:
-    root = q.popleft()
-
-    for i in graph[root]:
-        if visited[i] == 0:
+q = c.deque([1])
+visited.add(1)
+while len(q):
+    p = q.popleft()
+    for i in tree[p]:
+        if i not in visited:
+            parent[i-1] = p
+            visited.add(i)
             q.append(i)
-            rel[i] = root
-            visited[i] = 1
 
-
-for i in range(2, n+1):
-    print(rel[i])
+for i in range(1, n):
+    print(parent[i])
