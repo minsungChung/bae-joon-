@@ -23,7 +23,7 @@ def find(x):
 def addEdge(x, y):
     root_x = find(x)
     root_y = find(y)
-    parent[root_x] = root_y
+    parent[root_y] = root_x
 
 
 
