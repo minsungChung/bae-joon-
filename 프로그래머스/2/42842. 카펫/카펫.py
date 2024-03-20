@@ -1,12 +1,12 @@
 def solution(brown, yellow):
     answer = []
-    pairs = []
+    t = (brown - 4)//2
     
-    for i in range(1, int(yellow**(1/2)+1)):
-        if yellow % i == 0:
-            pairs.append([i, yellow//i]);
-            
-    for p in pairs:
-        if (p[0]+p[1]+2)*2 == brown:
-            answer = [p[1]+2, p[0]+2]
+    for i in range(1, t+1):
+        if i * (t-i) == yellow:
+            if i > t-i:
+                answer = [i+2, t-i+2]
+            else:
+                answer = [t-i+2, i+2]
+    
     return answer
