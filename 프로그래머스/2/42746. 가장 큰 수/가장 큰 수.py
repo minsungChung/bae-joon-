@@ -1,17 +1,10 @@
 def solution(numbers):
     answer = ''
-    nums = []
-    for n in numbers:
-        nts = str(n)
-        tmp = [nts*(6//len(nts)), len(nts)]
-        nums.append(tmp)
+    numbers = [str(num) for num in numbers]
+    numbers = [[num * (12//len(num)), len(num)] for num in numbers]
+    numbers.sort()
     
-    nums.sort(reverse=True)
-    if nums[0][0][0] == '0':
-        return '0'
-        
-    for num in nums:
-        answer += num[0][:num[1]]
+    for i in range(len(numbers)-1, -1, -1):
+        answer += numbers[i][0][:numbers[i][1]]
     
-    
-    return answer
+    return '0' if int(answer)==0 else answer
